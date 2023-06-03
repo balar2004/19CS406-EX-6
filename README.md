@@ -15,13 +15,34 @@ Step 6: print the results.
 Step 7: Stop the program.
 # PROGRAM:
 # CLIENT:
-
+```
+import socket
+from pythonping import ping
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
+while True:
+    hostname=c.recv(1024).decode()
+    try:
+        c.send(str(ping(hostname, verbose=False)).encode())
+    except KeyError:
+        c.send("Not Found".encode())
+```
 # SERVER:
-
+```
+import socket
+s=socket.socket()
+s.connect(('localhost',8000))
+while True:
+    ip=input("Enter the website you want to ping ")
+    s.send(ip.encode())
+    print(s.recv(1024).decode())
+```
 # OUTPUT:
 # CLIENT SIDE:
-
+![Client 4 1](https://github.com/balar2004/19CS406-EX-6/assets/118791778/4bfd097a-2879-40f1-9d9f-b28baf827cec)
 # SERVER SIDE:
-
+![Server 4 1](https://github.com/balar2004/19CS406-EX-6/assets/118791778/5779aed7-f1b2-4a09-94a2-97c14bb0f64e)
 # RESULT:
 Thus, the python program for simulating ping command was successfully executed.
